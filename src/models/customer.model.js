@@ -1,17 +1,6 @@
 import db from '../configs/db.js'
 
 const customerModel = {
-  // selectAll: (search, sort, limit, offset) => {
-  //   try {
-  //     return db.query(`
-  //     	SELECT * FROM customer 
-  //     	WHERE customer.name LIKE '%${search}%'
-  //     	ORDER BY customer.name ${sort}
-  //     	LIMIT ${limit} OFFSET ${offset}; 
-  //     	`)
-  //   } catch(err) { console.log(err.message) }
-  // },
-
   selectById: (id) => {
     try { return db.query(`SELECT * FROM customer WHERE id=${id}`) } 
     catch(err) { console.log(err.message) }

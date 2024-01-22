@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import express from 'express'
-import helmet from 'helmet';
-import cors from 'cors';
-import body from 'body-parser';
-import createError from 'http-errors';
+import helmet from 'helmet'
+import cors from 'cors'
+import body from 'body-parser'
+import createError from 'http-errors'
 import allRoute from './src/routes/index.js'
 
 const app = express()

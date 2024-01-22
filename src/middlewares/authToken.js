@@ -1,22 +1,20 @@
 /* eslint-disable no-undef */
-import { verify } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import createError from 'http-errors'
 
-const protect = (req, res, next) => {
+const jwtToken = (req, res, next) => {
   try {
     let token = req.headers.authorization
     if (token) {
       token = token.split(' ')[1];
-
-      let decoded = verify(token, process.env.SECRET_KEY);
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
       req.userId = decoded.id;
       next()
     } else {
       next(createError(400, 'Server need token'))
     }
   } catch (error) {
-    console.log(error.name);
-    // console.log(error);
+    console.log(error.name)
     if (error && error.name === 'JsonWebTokenError') {
       next(createError(400, 'Token invalid'))
     } else if (error && error.name === 'TokenExpiredError') {
@@ -35,6 +33,6 @@ const protect = (req, res, next) => {
 // }
 
 export default {
-  protect,
+  jwtToken,
   // isAdmin
 };
