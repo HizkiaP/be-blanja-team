@@ -14,7 +14,6 @@ const jwtToken = (req, res, next) => {
       next(createError(400, 'Server need token'))
     }
   } catch (error) {
-    console.log(error.name)
     if (error && error.name === 'JsonWebTokenError') {
       next(createError(400, 'Token invalid'))
     } else if (error && error.name === 'TokenExpiredError') {

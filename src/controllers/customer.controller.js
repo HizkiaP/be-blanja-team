@@ -4,15 +4,16 @@ const { hash, compare } = bcrypt;
 import response from '../helpers/commonResponse.js'
 import createError from 'http-errors'
 import jwtSign from '../helpers/jwt.js'
-// import cloudinary from '../helpers/cloudinary.js'
+import cloudinary from '../helpers/cloudinary.js'
+import getPublicId from '../helpers/getPublicId.js';
 
 const costumerController = {
   register: async (req, res, next) => {
     try {
-      const { name, email, password, phone, gender, photo, date_birth } = req.body;
+      const { name, email, password, phone, gender, image, date_birth } = req.body;
       const { rowCount } = await customerModel.selectByEmail(email)
       if (rowCount) 
-        return next(createError(403, 'Email already taken'))
+        return next(createError(400, 'Email already taken'))
 			
       hash(password, 10, async function (error, hash) {
         if (error) 
@@ -24,7 +25,7 @@ const costumerController = {
           password: hash,
           phone,
           gender,
-          photo,
+          image,
           date_birth,
         }
 
@@ -71,18 +72,28 @@ const costumerController = {
 
   update: async (req, res, next) => {
     try {
-      // const { id } = req.params;
-      const { name, email, phone, gender, photo, date_birth } = req.body
-      const data = { id:req.userId, name, email, phone, gender, photo, date_birth }
+      const { name, email, phone, gender, date_birth } = req.body
+      const data = { id:req.userId, name, email, phone, gender, date_birth }
       await customerModel.update(data)
       response(res, null, 200, 'Update success')
-      // res.status(200);
-      // res.json({
-      //   message: 'Update User Success',
-      //   data: result
-      // })   
     } catch(err) {
       return next(createError(500, 'Error update customer'))
+    }
+  },
+
+  updateImage: async (req, res, next) => {
+    let image
+    try {
+      const result = await customerModel.selectById(req.userId)
+      const imageUrl = result.rows[0].image
+      if (imageUrl != 'default.png')
+        cloudinary.uploader.destroy('blanja/customer/'+getPublicId(imageUrl))
+      
+      image = await cloudinary.uploader.upload(req.file.path, {folder: 'blanja/customer'})
+      await customerModel.updateImage(image.url, req.userId)
+      response(res, null, 200, 'Update image success')
+    } catch(err) {
+      return next(createError(500, 'Error update image customer'))
     }
   },
 }
