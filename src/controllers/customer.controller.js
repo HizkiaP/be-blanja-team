@@ -47,7 +47,6 @@ const costumerController = {
               id: result.rows[0].id
             }
             const data = {
-              role: 'customer',
               token: jwtSign.generateToken(payload)
             }
             response(res, data, 200, 'Login success')
@@ -64,7 +63,9 @@ const costumerController = {
   getSingle: async (req, res, next) => {
     try {
       const result = await customerModel.selectById(req.userId)
-      response(res, result.rows[0], 200, 'Get customer success')
+      const data = result.rows[0]
+      data.role = 'customer'
+      response(res, data, 200, 'Get customer success')
     } catch(err) {
       return next(createError(500, 'Error get customer'))
     }
