@@ -7,7 +7,7 @@ import jwtSign from '../helpers/jwt.js'
 import cloudinary from '../helpers/cloudinary.js'
 import getPublicId from '../helpers/getPublicId.js';
 
-const costumerController = {
+const customerController = {
   register: async (req, res, next) => {
     try {
       const { name, email, password, phone, gender, image, date_birth } = req.body;
@@ -32,7 +32,9 @@ const costumerController = {
         await customerModel.insert(data)
         response(res, null, 201, 'Customer registered')
       })
-    } catch(err) { console.log(err.message) }
+    } catch(err) { 
+      return next(createError(500, 'Register failed')) 
+    }
   },
 
   login: async (req, res, next) => {
@@ -44,7 +46,8 @@ const costumerController = {
         compare(password, userPass, function(err, resultCompare) {
           if (resultCompare) {
             const payload = {
-              id: result.rows[0].id
+              id: result.rows[0].id,
+              role: 'customer'
             }
             const data = {
               token: jwtSign.generateToken(payload)
@@ -63,9 +66,7 @@ const costumerController = {
   getSingle: async (req, res, next) => {
     try {
       const result = await customerModel.selectById(req.userId)
-      const data = result.rows[0]
-      data.role = 'customer'
-      response(res, data, 200, 'Get customer success')
+      response(res, result.rows[0], 200, 'Get customer success')
     } catch(err) {
       return next(createError(500, 'Error get customer'))
     }
@@ -99,4 +100,4 @@ const costumerController = {
   },
 }
 
-export default costumerController
+export default customerController
