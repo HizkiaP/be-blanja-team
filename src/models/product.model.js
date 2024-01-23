@@ -131,6 +131,10 @@ const productModel = {
   selectAllProducts: () => {
     return db.query(`SELECT * FROM product `);
   },
+
+  deleteProducts: (id) => {
+    return db.query(`DELETE FROM product WHERE id=${id} `);
+  },
 };
 
 export default productModel;
