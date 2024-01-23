@@ -1,11 +1,17 @@
 import db from "../configs/db.js";
 
 const productModel = {
-  // selectAllProducts: (search, sort, limit, offset) => {
-  //     return db.query(
-
-  //     )
-  // }
+  selectAllProducts: (search, sort, limit, offset) => {
+    return db.query(`
+      SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
+      FROM product
+      JOIN seller ON product.seller_id = seller.id 
+      WHERE product.name ILIKE '%${search}%'
+      ORDER BY product.name ${sort}
+      LIMIT ${limit}
+      OFFSET ${offset}; 
+      `);
+  },
 
   insertProduct: async ({
     name,
@@ -56,7 +62,6 @@ const productModel = {
           created_at,
         ]
       );
-
       return result;
     } catch (err) {
       console.error("Error inserting product:", err.message);
@@ -64,8 +69,67 @@ const productModel = {
     }
   },
 
+  updateProducts: async ({
+    name,
+    image,
+    price,
+    color,
+    size,
+    stock,
+    rating,
+    condition,
+    description,
+    seller_id,
+    category_id,
+    id,
+  }) => {
+    try {
+      const sellerIdValue = seller_id ? parseInt(seller_id) : null;
+      const categoryIdValue = category_id ? parseInt(category_id) : null;
+
+      const result = await db.query(
+        `UPDATE product SET
+                name = $1,
+                image = $2,
+                price = $3,
+                color = $4,
+                size = $5,
+                stock = $6,
+                rating = $7,
+                condition = $8,
+                description = $9,
+                seller_id = $10,
+                category_id = $11
+            WHERE id = $12`,
+        [
+          name,
+          image,
+          price,
+          color,
+          size,
+          stock,
+          rating,
+          condition,
+          description,
+          sellerIdValue,
+          categoryIdValue,
+          id,
+        ]
+      );
+
+      return result;
+    } catch (err) {
+      console.error("Error updating product:", err.message);
+      throw err;
+    }
+  },
+
+  selectByID: (id) => {
+    return db.query(`SELECT * FROM product WHERE id=$1 `, [id]);
+  },
+
   selectAllProducts: () => {
-    return db.query("SELECT * FROM product");
+    return db.query(`SELECT * FROM product `);
   },
 };
 
