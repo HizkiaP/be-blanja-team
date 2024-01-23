@@ -130,6 +130,25 @@ const productController = {
     }
   },
 
+  deleteProduct: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const rowCount = await productModel.deleteProducts(id);
+      if (rowCount) {
+        res.status(200).json({
+          message: "Delete success",
+        });
+      } else {
+        res.status(404).json({
+          message: "Product not found",
+        });
+      }
+    } catch (err) {
+      console.error(err.message);
+      next(createError(500, "Error deleting product"));
+    }
+  },
+
   getAllProducts: async (req, res, next) => {
     try {
       const result = await productModel.selectAllProducts();
