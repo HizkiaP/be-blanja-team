@@ -4,6 +4,9 @@ package-lock.json
 *.log
 *.gz
 .env
+.env_local
+.env_global
+
 
 # Coveralls
 .nyc_output
