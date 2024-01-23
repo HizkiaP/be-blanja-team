@@ -81,7 +81,6 @@ const productModel = {
     description,
     seller_id,
     category_id,
-    created_at,
     id,
   }) => {
     try {
@@ -100,9 +99,8 @@ const productModel = {
                 condition = $8,
                 description = $9,
                 seller_id = $10,
-                category_id = $11,
-                created_at = $12
-            WHERE id = $13`,
+                category_id = $11
+            WHERE id = $12`,
         [
           name,
           image,
@@ -115,7 +113,6 @@ const productModel = {
           description,
           sellerIdValue,
           categoryIdValue,
-          created_at,
           id,
         ]
       );
