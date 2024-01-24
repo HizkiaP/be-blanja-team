@@ -19,7 +19,11 @@ const categoryModel = {
   },
 
   selectAllProducts: () => {
-    return db.query('SELECT * FROM category ');
+    return db.query('SELECT * FROM category');
+  },
+
+  deleteCategory: (id) => {
+    return db.query(`DELETE FROM category WHERE id=${id} `);
   },
 };
 

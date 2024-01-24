@@ -24,14 +24,6 @@ const jwtToken = (req, res, next) => {
   }
 }
 
-// const isAdmin = (req, res, next)=>{
-//   if(req.decoded.role !== 'admin'){
-//     return next(createError(400, 'admin only'))
-//   }
-//   next()
-// }
-
 export default {
-  jwtToken,
-  // isAdmin
+  jwtToken
 };
