@@ -5,7 +5,7 @@ const { add, getByCustomerId, update, destroy } = addressController
 import auth from '../middlewares/authToken.js'
 
 router
-  .post('/', add)
+  .post('/', auth.jwtToken, add)
   .get('/', auth.jwtToken, getByCustomerId)
   .put('/:id', update)
   .delete('/:id', destroy)
