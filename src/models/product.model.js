@@ -1,14 +1,14 @@
-import db from "../configs/db.js";
+import db from '../configs/db.js';
 
 const productModel = {
   searchByName: (keyword, sort) => {
     return new Promise((resolve, reject) => {
       let query = `SELECT * FROM product WHERE name ILIKE '%${keyword}%'`;
       if (sort) {
-        if (sort === "ASC") {
-          query += " ORDER BY name ASC";
-        } else if (sort === "DESC") {
-          query += " ORDER BY name DESC";
+        if (sort === 'ASC') {
+          query += ' ORDER BY name ASC';
+        } else if (sort === 'DESC') {
+          query += ' ORDER BY name DESC';
         }
       }
       db.query(query, (err, res) => {
@@ -71,7 +71,7 @@ const productModel = {
       );
       return result;
     } catch (err) {
-      console.error("Error inserting product:", err.message);
+      console.error('Error inserting product:', err.message);
       throw err;
     }
   },
@@ -126,17 +126,17 @@ const productModel = {
 
       return result;
     } catch (err) {
-      console.error("Error updating product:", err.message);
+      console.error('Error updating product:', err.message);
       throw err;
     }
   },
 
   selectByID: (id) => {
-    return db.query("SELECT * FROM product WHERE id=$1 ", [id]);
+    return db.query('SELECT * FROM product WHERE id=$1 ', [id]);
   },
 
   selectAllProducts: () => {
-    return db.query("SELECT * FROM product ");
+    return db.query('SELECT * FROM product ');
   },
 
   deleteProducts: (id) => {

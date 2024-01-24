@@ -1,4 +1,4 @@
-import db from "../configs/db.js";
+import db from '../configs/db.js';
 
 const categoryModel = {
   insertCategory: async ({ name, image }) => {
@@ -13,13 +13,13 @@ const categoryModel = {
       );
       return result;
     } catch (err) {
-      console.error("Error inserting category:", err.message);
+      console.error('Error inserting category:', err.message);
       throw err;
     }
   },
 
   selectAllProducts: () => {
-    return db.query("SELECT * FROM category ");
+    return db.query('SELECT * FROM category ');
   },
 };
 

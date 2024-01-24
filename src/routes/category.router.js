@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
-import upload from "../middlewares/upload.js";
-import categoryController from "../controllers/category.controller.js";
+import upload from '../middlewares/upload.js';
+import categoryController from '../controllers/category.controller.js';
 
-router.post("/", upload, categoryController.createProduct);
-router.get("/", categoryController.getAllCategories);
+router.post('/', upload, categoryController.createProduct);
+router.get('/', categoryController.getAllCategories);
 
 export default router;
