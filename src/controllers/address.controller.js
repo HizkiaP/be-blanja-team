@@ -20,7 +20,7 @@ const addressController = {
       const result = await addressModel.selectByCustomerId(req.userId)
       let data
       if (!result.rows[0]) data = 'no data'
-      else data = result.rows[0]
+      else data = result.rows
       response(res, data, 200, 'Get address success')
     } catch(err) {
       return next(createError(500, 'Error get address'))
