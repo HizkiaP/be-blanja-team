@@ -1,16 +1,23 @@
 import db from "../configs/db.js";
 
 const productModel = {
-  selectAllProducts: (search, sort, limit, offset) => {
-    return db.query(`
-      SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
-      FROM product
-      JOIN seller ON product.seller_id = seller.id 
-      WHERE product.name ILIKE '%${search}%'
-      ORDER BY product.name ${sort}
-      LIMIT ${limit}
-      OFFSET ${offset}; 
-      `);
+  searchByName: (keyword, sort) => {
+    return new Promise((resolve, reject) => {
+      let query = `SELECT * FROM product WHERE name ILIKE '%${keyword}%'`;
+      if (sort) {
+        if (sort === "ASC") {
+          query += " ORDER BY name ASC";
+        } else if (sort === "DESC") {
+          query += " ORDER BY name DESC";
+        }
+      }
+      db.query(query, (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      });
+    });
   },
 
   insertProduct: async ({
@@ -125,11 +132,11 @@ const productModel = {
   },
 
   selectByID: (id) => {
-    return db.query(`SELECT * FROM product WHERE id=$1 `, [id]);
+    return db.query("SELECT * FROM product WHERE id=$1 ", [id]);
   },
 
   selectAllProducts: () => {
-    return db.query(`SELECT * FROM product `);
+    return db.query("SELECT * FROM product ");
   },
 
   deleteProducts: (id) => {

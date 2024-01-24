@@ -16,7 +16,6 @@ const productController = {
         description,
         seller_id,
         category_id,
-        created_at,
       } = req.body;
       let imageUrl = "";
       if (req.file) {
@@ -49,7 +48,7 @@ const productController = {
         category_id: category_id ?? null,
         created_at: currentUTCDateTime,
       };
-      console.log(data);
+      //   console.log(data);
       const result = await productModel.insertProduct(data);
       if (result?.rowCount > 0) {
         return res.status(201).json({
@@ -149,17 +148,27 @@ const productController = {
     }
   },
 
-  getAllProducts: async (req, res, next) => {
+  search: (req, res) => {
+    const { keyword, sort } = req.query;
+    productModel
+      .searchByName(keyword, sort)
+      .then((result) => {
+        res.json(result.rows);
+      })
+      .catch((err) => {
+        res.json({ message: err.message });
+      });
+  },
+
+  getByID: async (req, res) => {
     try {
-      const result = await productModel.selectAllProducts();
-      const products = result.rows;
-      res.status(200).json({
-        success: true,
-        data: products,
-        message: "Products retrieved successfully",
+      const id = req.params.id;
+      const result = await productModel.selectByID(id);
+      res.send({
+        data: result.rows,
       });
     } catch (err) {
-      console.log(err.message);
+      res.json({ message: err.message });
     }
   },
 };
