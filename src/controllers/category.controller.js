@@ -1,24 +1,24 @@
-import categoryModel from "../models/category.model.js";
-import cloudinary from "../helpers/cloudinary.js";
-import createError from "http-errors";
+import categoryModel from '../models/category.model.js';
+import cloudinary from '../helpers/cloudinary.js';
+import createError from 'http-errors';
 
 const categoryController = {
   createProduct: async (req, res, next) => {
     try {
       const { name } = req.body;
-      let imageUrl = "";
+      let imageUrl = '';
       if (req.file) {
         const uploadToCloudinary = await cloudinary.uploader.upload(
           req?.file?.path,
           {
-            folder: "blanja/category",
+            folder: 'blanja/category'
           }
         );
 
         if (!uploadToCloudinary) {
-          return next(createError(res, 400, "upload image failed"));
+          return next(createError(res, 400, 'upload image failed'));
         }
-        imageUrl = uploadToCloudinary?.secure_url ?? "";
+        imageUrl = uploadToCloudinary?.secure_url ?? '';
       }
 
       const data = {
@@ -31,11 +31,11 @@ const categoryController = {
         return res.status(201).json({
           success: true,
           data,
-          message: "Create category success",
+          message: 'Create category success',
         });
       }
     } catch (error) {
-      return next(createError(500, "Error creating category"));
+      return next(createError(500, 'Error creating category'));
     }
   },
 
@@ -47,11 +47,11 @@ const categoryController = {
       res.status(200).json({
         success: true,
         data: categories,
-        message: "Categories retrieved successfully",
+        message: 'Categories retrieved successfully',
       });
     } catch (err) {
       console.error(err.message);
-      next(createError(500, "Error getting all categories"));
+      next(createError(500, 'Error getting all categories'));
     }
   },
 
