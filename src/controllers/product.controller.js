@@ -171,6 +171,30 @@ const productController = {
       res.json({ message: err.message });
     }
   },
+
+  getBySellerID: async (req, res) => {
+    try {
+      const seller_id = req.params.seller_id;
+      const result = await productModel.getProductBySellerID(seller_id);
+      res.send({
+        data: result.rows,
+      });
+    } catch (err) {
+      res.json({ message: err.message });
+    }
+  },
+
+  getByCategoryID: async (req, res) => {
+    try {
+      const category_id = req.params.category_id;
+      const result = await productModel.getProductByCategoryID(category_id);
+      res.send({
+        data: result.rows,
+      });
+    } catch (err) {
+      res.json({ message: err.message });
+    }
+  },
 };
 
 export default productController;

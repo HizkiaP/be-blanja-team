@@ -5,5 +5,6 @@ import categoryController from "../controllers/category.controller.js";
 
 router.post("/", upload, categoryController.createProduct);
 router.get("/", categoryController.getAllCategories);
+router.delete("/:id", categoryController.deleteCategory);
 
 export default router;

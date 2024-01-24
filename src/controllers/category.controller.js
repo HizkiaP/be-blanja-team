@@ -54,5 +54,24 @@ const categoryController = {
       next(createError(500, "Error getting all categories"));
     }
   },
+
+  deleteCategory: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const rowCount = await categoryModel.deleteCategory(id);
+      if (rowCount) {
+        res.status(200).json({
+          message: "Delete success",
+        });
+      } else {
+        res.status(404).json({
+          message: "Category not found",
+        });
+      }
+    } catch (err) {
+      console.error(err.message);
+      next(createError(500, "Error deleting category"));
+    }
+  },
 };
 export default categoryController;
