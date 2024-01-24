@@ -6,7 +6,7 @@ const addressController = {
   add: async (req, res, next) => {
     try {
       const { address_type, name_recipient, phone, street,	postal_code,	city,	primary_address } = req.body;
-      const data = { id: req.userId, address_type, name_recipient, phone, street,	postal_code,	city,	primary_address }
+      const data = { customer_id: req.userId, address_type, name_recipient, phone, street,	postal_code,	city,	primary_address }
 
       await addressModel.insert(data)
       response(res, null, 201, 'Address Added')      
