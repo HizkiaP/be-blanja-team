@@ -8,5 +8,8 @@ router.get('/', productController.search);
 router.put('/:id', upload, productController.updateProduct);
 router.delete('/:id', productController.deleteProduct);
 router.get('/:id', productController.getByID);
+router.get("/seller/:seller_id", productController.getBySellerID);
+router.get("/category/:category_id", productController.getByCategoryID);
+
 
 export default router;
