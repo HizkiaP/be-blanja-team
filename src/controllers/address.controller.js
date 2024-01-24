@@ -7,7 +7,9 @@ const addressController = {
     try {
       const { address_type, name_recipient, phone, street,	postal_code,	city,	primary_address } = req.body;
       const data = { customer_id: req.userId, address_type, name_recipient, phone, street,	postal_code,	city,	primary_address }
-
+      const result = await addressModel.selectByCustomerId(req.userId)
+      if (!result.rows[0]) 
+        data.primary_address = true
       await addressModel.insert(data)
       response(res, null, 201, 'Address Added')      
     } catch(err) { 
@@ -24,6 +26,28 @@ const addressController = {
       response(res, data, 200, 'Get address success')
     } catch(err) {
       return next(createError(500, 'Error get address'))
+    }
+  },
+
+  getPrimary: async (req, res, next) => {
+    try {
+      const result = await addressModel.selectPrimary(req.userId)
+      response(res, result.rows[0], 200, 'Get primary address success')
+    } catch(err) {
+      return next(createError(500, 'Error get primary address'))
+    }
+  },
+
+  changePrimary: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const result = await addressModel.selectPrimary(req.userId)
+      const oldIdPrimary = result.rows[0].id
+      await addressModel.changePrimaryOff(oldIdPrimary)
+      await addressModel.changePrimaryOn(id)
+      response(res, null, 200, 'Change primary address success')
+    } catch(err) {
+      return next(createError(500, 'Error change primary address'))
     }
   },
 
