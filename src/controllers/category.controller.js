@@ -61,16 +61,16 @@ const categoryController = {
       const rowCount = await categoryModel.deleteCategory(id);
       if (rowCount) {
         res.status(200).json({
-          message: "Delete success",
+          message: 'Delete success',
         });
       } else {
         res.status(404).json({
-          message: "Category not found",
+          message: 'Category not found',
         });
       }
     } catch (err) {
       console.error(err.message);
-      next(createError(500, "Error deleting category"));
+      next(createError(500, 'Error deleting category'));
     }
   },
 };

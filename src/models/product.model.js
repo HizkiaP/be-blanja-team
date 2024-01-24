@@ -144,11 +144,11 @@ const productModel = {
   },
 
   getProductBySellerID: (seller_id) => {
-    return db.query("SELECT * FROM product WHERE seller_id = $1", [seller_id]);
+    return db.query('SELECT * FROM product WHERE seller_id = $1', [seller_id]);
   },
 
   getProductByCategoryID: (category_id) => {
-    return db.query("SELECT * FROM product WHERE category_id = $1", [
+    return db.query('SELECT * FROM product WHERE category_id = $1', [
       category_id,
     ]);
   },
