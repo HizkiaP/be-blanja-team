@@ -21,7 +21,7 @@ const customerModel = {
   update: ({id, name, email, phone, gender, date_birth}) => {
     try {
       return db.query(`UPDATE customer SET name='${name}', email='${email}', phone='${phone}', gender='${gender}', date_birth='${date_birth}' 
-        WHERE id=${id}`,)
+        WHERE id=${id}`)
     } catch(err) { console.log(err.message)}
   },
 
