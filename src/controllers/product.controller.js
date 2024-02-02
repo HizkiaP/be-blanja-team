@@ -149,9 +149,9 @@ const productController = {
   },
 
   search: (req, res) => {
-    const { keyword, sort } = req.query;
+    const { keyword, sort, page, pageSize } = req.query;
     productModel
-      .searchByName(keyword, sort)
+      .searchByName(keyword, sort, page, pageSize)
       .then((result) => {
         res.json(result.rows);
       })
@@ -159,6 +159,7 @@ const productController = {
         res.json({ message: err.message });
       });
   },
+  
 
   getByID: async (req, res) => {
     try {

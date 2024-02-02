@@ -1,16 +1,23 @@
 import db from '../configs/db.js';
 
 const productModel = {
-  searchByName: (keyword, sort) => {
+  searchByName: (keyword, sort, page, pageSize) => {
     return new Promise((resolve, reject) => {
+      const offset = (page - 1) * pageSize;
       let query = `SELECT * FROM product WHERE name ILIKE '%${keyword}%'`;
+  
       if (sort) {
         if (sort === 'ASC') {
-          query += ' ORDER BY name ASC';
+          query += ' ORDER BY price ASC';
         } else if (sort === 'DESC') {
-          query += ' ORDER BY name DESC';
+          query += ' ORDER BY price DESC';
         }
       }
+  
+      if (page && pageSize) {
+        query += ` LIMIT ${pageSize} OFFSET ${offset}`;
+      }
+  
       db.query(query, (err, res) => {
         if (err) {
           reject(err);
@@ -19,6 +26,8 @@ const productModel = {
       });
     });
   },
+  
+  
 
   insertProduct: async ({
     name,
