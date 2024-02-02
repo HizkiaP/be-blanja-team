@@ -41,6 +41,7 @@ const addressController = {
   changePrimary: async (req, res, next) => {
     try {
       const { id } = req.params
+      
       const result = await addressModel.selectPrimary(req.userId)
       const oldIdPrimary = result.rows[0].id
       await addressModel.changePrimaryOff(oldIdPrimary)
