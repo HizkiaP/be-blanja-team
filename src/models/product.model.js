@@ -3,22 +3,21 @@ import db from '../configs/db.js';
 const productModel = {
   searchByName: (keyword, sort, page, pageSize) => {
     return new Promise((resolve, reject) => {
-      const offset = (page - 1) * pageSize;
-      let query = `SELECT * FROM product WHERE name ILIKE '%${keyword}%'`;
-  
+      const offset = (parseInt(page) - 1) * parseInt(pageSize);
+      let query = 'SELECT * FROM product WHERE name ILIKE $1';
+
+      const queryParams = [`%${keyword}%`];
+
       if (sort) {
-        if (sort === 'ASC') {
-          query += ' ORDER BY price ASC';
-        } else if (sort === 'DESC') {
-          query += ' ORDER BY price DESC';
-        }
+        query += ' ORDER BY price ' + (sort === 'ASC' ? 'ASC' : 'DESC');
       }
-  
-      if (page && pageSize) {
-        query += ` LIMIT ${pageSize} OFFSET ${offset}`;
+
+      if (page !== undefined && pageSize !== undefined) {
+        query += ' LIMIT $2 OFFSET $3';
+        queryParams.push(pageSize, offset);
       }
-  
-      db.query(query, (err, res) => {
+
+      db.query(query, queryParams, (err, res) => {
         if (err) {
           reject(err);
         }
@@ -160,6 +159,7 @@ const productModel = {
     return db.query('SELECT * FROM product WHERE category_id = $1', [
       category_id,
     ]);
+    
   },
 };
 
