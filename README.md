@@ -38,13 +38,6 @@ bash
 
 ## Environment Variables
 
-bash
-DB_HOST=
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-DB_PORT=
-
 JWT_SECRET_KEY=
 
 CLOUDINARY_CLOUD_NAME=
@@ -75,7 +68,7 @@ bash
 Start the project
 
 bash
-  npm run dev
+  npm start
 
 
 ## Postman
