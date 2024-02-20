@@ -80,7 +80,7 @@ bash
 
 ## Postman
 
-⚡[API Documentation](https://documenter.getpostman.com/view/23681909/2s9YXh4288)⚡
+⚡[API Documentation]()⚡
 
 ## Authors
 
