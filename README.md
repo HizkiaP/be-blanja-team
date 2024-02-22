@@ -91,4 +91,4 @@ bash
 
 ⚡[Frontend Blanja](https://github.com/abdulnaim6/fe-blanja-team)⚡
 
-⚡[Demo Blanja]()⚡
+⚡[Demo Blanja](https://fe-blanja-team.vercel.app/)⚡
