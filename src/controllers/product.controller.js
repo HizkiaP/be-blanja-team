@@ -1,6 +1,6 @@
-import productModel from '../models/product.model.js';
-import cloudinary from '../helpers/cloudinary.js';
-import createError from 'http-errors';
+import productModel from "../models/product.model.js";
+import cloudinary from "../helpers/cloudinary.js";
+import createError from "http-errors";
 
 const productController = {
   createProduct: async (req, res, next) => {
@@ -17,19 +17,19 @@ const productController = {
         seller_id,
         category_id,
       } = req.body;
-      let imageUrl = '';
+      let imageUrl = "";
       if (req.file) {
         const uploadToCloudinary = await cloudinary.uploader.upload(
           req?.file?.path,
           {
-            folder: 'blanja/product',
+            folder: "blanja/product",
           }
         );
 
         if (!uploadToCloudinary) {
-          return next(createError(res, 400, 'upload image failed'));
+          return next(createError(res, 400, "upload image failed"));
         }
-        imageUrl = uploadToCloudinary?.secure_url ?? '';
+        imageUrl = uploadToCloudinary?.secure_url ?? "";
       }
 
       const currentUTCDateTime = new Date().toUTCString();
@@ -54,11 +54,11 @@ const productController = {
         return res.status(201).json({
           success: true,
           data,
-          message: 'Create product success',
+          message: "Create product success",
         });
       }
     } catch (error) {
-      return next(createError(500, 'Error creating product'));
+      return next(createError(500, "Error creating product"));
     }
   },
 
@@ -80,22 +80,22 @@ const productController = {
 
       const { rowCount, rows } = await productModel.selectByID(id);
       if (!rowCount) {
-        return next(createError(res, 404, 'Product id is not found'));
+        return next(createError(res, 404, "Product id is not found"));
       }
 
-      let imageUrl = '';
+      let imageUrl = "";
       if (req.file) {
         const uploadToCloudinary = await cloudinary.uploader.upload(
           req.file.path,
           {
-            folder: 'blanja/product',
+            folder: "blanja/product",
           }
         );
 
         if (!uploadToCloudinary) {
-          return next(createError(res, 400, 'Upload image failed'));
+          return next(createError(res, 400, "Upload image failed"));
         }
-        imageUrl = uploadToCloudinary.secure_url ?? '';
+        imageUrl = uploadToCloudinary.secure_url ?? "";
       }
 
       const data = {
@@ -118,14 +118,14 @@ const productController = {
         return res.status(200).json({
           success: true,
           data,
-          message: 'Update product success',
+          message: "Update product success",
         });
       } else {
-        return next(createError(res, 404, 'Product not found for updating'));
+        return next(createError(res, 404, "Product not found for updating"));
       }
     } catch (error) {
       console.error(error.message);
-      return next(createError(500, 'Error updating product'));
+      return next(createError(500, "Error updating product"));
     }
   },
 
@@ -135,16 +135,16 @@ const productController = {
       const rowCount = await productModel.deleteProducts(id);
       if (rowCount) {
         res.status(200).json({
-          message: 'Delete success',
+          message: "Delete success",
         });
       } else {
         res.status(404).json({
-          message: 'Product not found',
+          message: "Product not found",
         });
       }
     } catch (err) {
       console.error(err.message);
-      next(createError(500, 'Error deleting product'));
+      next(createError(500, "Error deleting product"));
     }
   },
 
@@ -159,7 +159,6 @@ const productController = {
         res.json({ message: err.message });
       });
   },
-  
 
   getByID: async (req, res) => {
     try {
@@ -189,6 +188,18 @@ const productController = {
     try {
       const category_id = req.params.category_id;
       const result = await productModel.getProductByCategoryID(category_id);
+      res.send({
+        data: result.rows,
+      });
+    } catch (err) {
+      res.json({ message: err.message });
+    }
+  },
+
+  getLatestProducts: async (req, res) => {
+    try {
+      const { limit = 6 } = req.query;
+      const result = await productModel.getLatestProducts(limit);
       res.send({
         data: result.rows,
       });
