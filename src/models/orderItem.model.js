@@ -7,7 +7,7 @@ const orderItemModel = {
 
   insert: ({ id_order, id_product, quantity, price }) => {
     try { 
-      return db.query(`INSERT INTO order_item (id_order, id_product, quantity, price) 
+      return db.query(`INSERT INTO order_item (id_order_item, id_product, quantity, price) 
         VALUES ( ${id_order}, ${id_product}, ${quantity}, ${price})`)
     } catch(err) { console.log(err.message) }
   },

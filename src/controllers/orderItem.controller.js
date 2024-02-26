@@ -3,7 +3,7 @@ import response from '../helpers/commonResponse.js'
 import createError from 'http-errors'
 
 const orderItemsController = {
-  getAll: async (res, next) => {
+  getAll: async (req, res, next) => {
     try {
       const result = await orderItemModel.selectAll()
       response(res, result.rows, 200, 'Get all order_items success')
