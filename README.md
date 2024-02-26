@@ -38,13 +38,6 @@ bash
 
 ## Environment Variables
 
-bash
-DB_HOST=
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-DB_PORT=
-
 JWT_SECRET_KEY=
 
 CLOUDINARY_CLOUD_NAME=
@@ -75,12 +68,12 @@ bash
 Start the project
 
 bash
-  npm run dev
+  npm start
 
 
 ## Postman
 
-⚡[API Documentation](https://documenter.getpostman.com/view/23681909/2s9YXh4288)⚡
+⚡[API Documentation](https://documenter.getpostman.com/view/28064099/2sA2rDx1it)⚡
 
 ## Authors
 
@@ -98,4 +91,4 @@ bash
 
 ⚡[Frontend Blanja](https://github.com/abdulnaim6/fe-blanja-team)⚡
 
-⚡[Demo Blanja]()⚡
+⚡[Demo Blanja](https://fe-blanja-team.vercel.app/)⚡
