@@ -73,7 +73,7 @@ bash
 
 ## Postman
 
-⚡[API Documentation](https://documenter.getpostman.com/view/32517438/2sA2r9VNcL )⚡
+⚡[API Documentation](https://documenter.getpostman.com/view/28064099/2sA2rDx1it)⚡
 
 ## Authors
 
