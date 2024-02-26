@@ -1,19 +1,19 @@
-import db from '../configs/db.js';
+import db from "../configs/db.js";
 
 const productModel = {
   searchByName: (keyword, sort, page, pageSize) => {
     return new Promise((resolve, reject) => {
       const offset = (parseInt(page) - 1) * parseInt(pageSize);
-      let query = 'SELECT * FROM product WHERE name ILIKE $1';
+      let query = "SELECT * FROM product WHERE name ILIKE $1";
 
       const queryParams = [`%${keyword}%`];
 
       if (sort) {
-        query += ' ORDER BY price ' + (sort === 'ASC' ? 'ASC' : 'DESC');
+        query += " ORDER BY price " + (sort === "ASC" ? "ASC" : "DESC");
       }
 
       if (page !== undefined && pageSize !== undefined) {
-        query += ' LIMIT $2 OFFSET $3';
+        query += " LIMIT $2 OFFSET $3";
         queryParams.push(pageSize, offset);
       }
 
@@ -25,8 +25,6 @@ const productModel = {
       });
     });
   },
-  
-  
 
   insertProduct: async ({
     name,
@@ -79,7 +77,7 @@ const productModel = {
       );
       return result;
     } catch (err) {
-      console.error('Error inserting product:', err.message);
+      console.error("Error inserting product:", err.message);
       throw err;
     }
   },
@@ -134,17 +132,17 @@ const productModel = {
 
       return result;
     } catch (err) {
-      console.error('Error updating product:', err.message);
+      console.error("Error updating product:", err.message);
       throw err;
     }
   },
 
   selectByID: (id) => {
-    return db.query('SELECT * FROM product WHERE id=$1 ', [id]);
+    return db.query("SELECT * FROM product WHERE id=$1 ", [id]);
   },
 
   selectAllProducts: () => {
-    return db.query('SELECT * FROM product ');
+    return db.query("SELECT * FROM product ");
   },
 
   deleteProducts: (id) => {
@@ -152,14 +150,19 @@ const productModel = {
   },
 
   getProductBySellerID: (seller_id) => {
-    return db.query('SELECT * FROM product WHERE seller_id = $1', [seller_id]);
+    return db.query("SELECT * FROM product WHERE seller_id = $1", [seller_id]);
   },
 
   getProductByCategoryID: (category_id) => {
-    return db.query('SELECT * FROM product WHERE category_id = $1', [
+    return db.query("SELECT * FROM product WHERE category_id = $1", [
       category_id,
     ]);
-    
+  },
+
+  getLatestProducts: (limit) => {
+    return db.query("SELECT * FROM product ORDER BY created_at DESC LIMIT $1", [
+      limit,
+    ]);
   },
 };
 
