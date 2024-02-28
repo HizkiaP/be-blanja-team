@@ -28,9 +28,19 @@ const myBagController = {
       const data = { customer_id: req.userId, product_id, quantity, price }
       console.log(data)
       await myBagModel.insert(data)
-      response(res, null, 201, 'Product Added')      
+      response(res, null, 201, 'Product in mybag added')      
     } catch(err) { 
-      return next(createError(500, 'Add product failed')) 
+      return next(createError(500, 'Add product in mybag failed')) 
+    }
+  },
+
+  destroy: async (req, res, next) => {
+    try {
+      const { product_id } = req.params
+      await myBagModel.delete(req.userId, product_id)
+      response(res, null, 200, 'Delete product in mybag success')
+    } catch(err) {
+      return next(createError(500, 'Error delete product in mybag'))
     }
   },
 }

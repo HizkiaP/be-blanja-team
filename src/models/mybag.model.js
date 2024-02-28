@@ -20,6 +20,12 @@ const myBagModel = {
         VALUES ( ${customer_id}, ${product_id}, ${quantity}, ${price})`)
     } catch(err) { console.log(err.message) }
   },
+
+  delete: ( customer_id, product_id ) => {
+    try {
+      return db.query(`DELETE FROM mybag WHERE customer_id = ${customer_id} AND product_id = ${product_id}`)
+    } catch(err) { console.log(err.message) }
+  }
 }
 
 export default myBagModel
