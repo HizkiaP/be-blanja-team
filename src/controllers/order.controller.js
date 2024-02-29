@@ -26,11 +26,11 @@ const orderController = {
     }
   },
 
-  getLastId: async (res, next) => {
+  getLastId: async (req, res, next) => {
     try {
       const result = await orderModel.selectLastId()
-      console.log(result.data)
-      // response(res, data, 200, 'Get address success')
+      // console.log(result.rows[0])
+      response(res, result.rows[0], 200, 'Get last order id success')
     } catch(err) {
       return next(createError(500, 'Error get address'))
     }

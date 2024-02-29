@@ -6,7 +6,7 @@ import auth from '../middlewares/authToken.js'
 
 router  
   .get('/customer', auth.jwtToken, getByCustomerId)
-  .get('/lastId', getLastId)
+  .get('/last-id', getLastId)
   .post('/', auth.jwtToken, add)
 
 export default router;
