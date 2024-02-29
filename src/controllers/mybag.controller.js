@@ -24,8 +24,8 @@ const myBagController = {
   add: async (req, res, next) => {
     try {
       console.log('masuk add controller')
-      const {  product_id, quantity, price } = req.body;
-      const data = { customer_id: req.userId, product_id, quantity, price }
+      const {  id_product, quantity, price } = req.body;
+      const data = { id_customer: req.userId, id_product, quantity, price }
       console.log(data)
       await myBagModel.insert(data)
       response(res, null, 201, 'Product in mybag added')      
@@ -36,8 +36,8 @@ const myBagController = {
 
   destroy: async (req, res, next) => {
     try {
-      const { product_id } = req.params
-      await myBagModel.delete(req.userId, product_id)
+      const { id_product } = req.params
+      await myBagModel.delete(req.userId, id_product)
       response(res, null, 200, 'Delete product in mybag success')
     } catch(err) {
       return next(createError(500, 'Error delete product in mybag'))

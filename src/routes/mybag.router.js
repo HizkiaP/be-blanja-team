@@ -8,7 +8,7 @@ router
   .get('/', getAll)
   .get('/customer', auth.jwtToken, getByCustomerId)
   .post('/', auth.jwtToken, add)
-  .delete('/:product_id', auth.jwtToken, destroy)
+  .delete('/:id_product', auth.jwtToken, destroy)
   
 
 
