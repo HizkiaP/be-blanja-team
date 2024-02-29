@@ -18,7 +18,7 @@ const orderController = {
     try {
       const result = await orderModel.selectByCustomerId(req.userId)
       let data
-      if (!result.rows[0]) data = 'no data'
+      if (!result.rows[0]) data = []
       else data = result.rows
       response(res, data, 200, 'Get address success')
     } catch(err) {
