@@ -3,7 +3,6 @@ import db from '../configs/db.js'
 const orderModel = {
   insert: ({ customer_id, address_id, seller_id, order_total, payment_method }) => {
     try { 
-      console.log('customer_id : '+customer_id)
       return db.query(`INSERT INTO "order" (customer_id, address_id, seller_id, order_total, payment_method, order_date) 
         VALUES ( ${customer_id}, ${address_id}, ${seller_id}, ${order_total}, '${payment_method}', CURRENT_TIMESTAMP)`)
     } catch(err) { console.log(err.message) }

@@ -19,7 +19,7 @@ const orderItemsController = {
       await orderItemModel.insert(data)
       response(res, null, 201, 'Order Added')      
     } catch(err) { 
-      return next(createError(500, 'Add order failed')) 
+      return next(createError(500, err.message)) 
     }
   },
 }

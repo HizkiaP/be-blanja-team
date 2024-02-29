@@ -5,12 +5,13 @@ import createError from 'http-errors'
 const orderController = {
   add: async (req, res, next) => {
     try {
+      console.log('add controller')
       const { address_id, seller_id, order_total, payment_method } = req.body;
       const data = { customer_id: req.userId, address_id, seller_id, order_total, payment_method }
       await orderModel.insert(data)
       response(res, null, 201, 'Order Added')      
-    } catch(err) { 
-      return next(createError(500, 'Add order failed')) 
+    } catch(err) {
+      return next(createError(500, err.message)) 
     }
   },
 
