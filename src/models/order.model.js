@@ -10,7 +10,10 @@ const orderModel = {
   },
 
   selectByCustomerId: ( customer_id ) => {
-    try { return db.query(`SELECT * FROM "order" WHERE customer_id=${customer_id}`) } 
+    try { return db.query(`
+      SELECT * FROM "order"
+      JOIN order_item ON "order".id=order_item.id_order_item
+      WHERE customer_id=${customer_id}`) } 
     catch(err) { console.log(err.message) }
   },
 
