@@ -1,5 +1,6 @@
 import orderModel from '../models/order.model.js'
 import orderItemModel from '../models/orderItem.model.js'
+import myBagModel from '../models/mybag.model.js'
 import response from '../helpers/commonResponse.js'
 import createError from 'http-errors'
 import { v4 as uuidv4 } from 'uuid'
@@ -27,7 +28,7 @@ const orderController = {
         }        
         await orderItemModel.insert(dataOrderItem)
       }))
-      // await orderItemModel.insert(dataOrderItem)
+      await myBagModel.deleteAllProductCustomer(req.userId)
       response(res, null, 201, 'Order Added')      
     } catch(err) {
       console.log(err)

@@ -25,6 +25,12 @@ const myBagModel = {
     try {
       return db.query(`DELETE FROM mybag WHERE id_customer = ${id_customer} AND id_product = ${id_product}`)
     } catch(err) { console.log(err.message) }
+  },
+  
+  deleteAllProductCustomer: ( id_customer ) => {
+    try {
+      return db.query(`DELETE FROM mybag WHERE id_customer = ${id_customer}`)
+    } catch(err) { console.log(err.message) }
   }
 }
 
