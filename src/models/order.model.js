@@ -10,17 +10,20 @@ const orderModel = {
 
   selectByCustomerId: ( customer_id ) => {
     try { return db.query(`
-      SELECT * FROM "order"
-      JOIN order_item ON "order".id=order_item.id_order_item
+      SELECT 
+        "order".id, 
+        "order".order_date, 
+        product.name, 
+        order_item.quantity, 
+        order_item.price, 
+        "order".payment_method 
+      FROM "order"
+      JOIN order_item ON "order".id = order_item.id_order_item
       JOIN product ON order_item.id_product = product.id
-      WHERE customer_id=${customer_id}`) } 
+      WHERE customer_id=${customer_id} 
+      ORDER BY order_date DESC`) } 
     catch(err) { console.log(err.message) }
   },
-
-  selectLastId: () => {
-    try { return db.query('SELECT MAX(id) AS last_id FROM "order"') }
-    catch(err) { console.log(err.message) }
-  }
 }
 
 export default orderModel
