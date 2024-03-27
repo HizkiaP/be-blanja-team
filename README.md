@@ -89,6 +89,6 @@ bash
 
 ⚡[Backend Blanja](https://github.com/abdulnaim6/be-blanja-team)⚡
 
-⚡[Frontend Blanja](https://github.com/abdulnaim6/fe-blanja-team)⚡
+⚡[Frontend Blanja](https://github.com/HizkiaP/fe-blanja-team)⚡
 
 ⚡[Demo Blanja](https://fe-blanja-team.vercel.app/)⚡
